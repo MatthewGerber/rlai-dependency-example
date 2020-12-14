@@ -15,10 +15,11 @@ git clone git@github.com:MatthewGerber/rlai-dependency-example.git
 Note the structure of the example project, particularly `setup.py` (which brings in the `rlai` package) and the 
 [sticky_gridworld.py](src/example/sticky_gridworld.py) script, which implements the example.
 
-2.  Create a fresh virtual environment and install the example package.
+2.  Create and activate a fresh virtual environment, and install the example package.
 ```
 cd rlai-dependency-example
 virtualenv -p python3.8 venv
+. venv/bin/activate
 pip install -e .
 ```
 
