@@ -1,34 +1,42 @@
-# `rlai` Dependency Example
-This is an example of using the [`rlai`](https://github.com/MatthewGerber/rlai) package as a dependency for 
-reinforcement learning. The goal here is to modify the probabilistic structure of a standard gridworld environment 
-(specifically Example 4.1 in the Sutton and Barto (2018) text). The modification causes one of the goal states to be 
-surrounded by states that are "sticky", in that they can be traversed in the usual way but incur a 10x larger negative 
-reward for doing so. This can be interpreted as taking 10x longer to traverse than the other states (hence the nickname 
-"sticky").
+# `rlai` Examples
+This repository provides examples of using the [`rlai`](https://github.com/MatthewGerber/rlai) package for 
+reinforcement learning. 
 
-# Installing and Running the Example
+# Installation
 
 1. Clone the repository.
 ```
 git clone git@github.com:MatthewGerber/rlai-dependency-example.git
 ```
-Note the structure of the example project, particularly `setup.py` (which brings in the `rlai` package) and the 
-[sticky_gridworld.py](src/example/sticky_gridworld.py) script, which implements the example.
+Note the structure of the example project, particularly `setup.py` (which brings in the `rlai` package).
 
-2.  Create and activate a fresh virtual environment, and install the example package.
+2.  Create and activate a fresh virtual environment. Any Python version compatible with 3.7 should work. Python 3.8 is
+used below.
 ```
 cd rlai-dependency-example
 virtualenv -p python3.8 venv
 . venv/bin/activate
+```
+
+3. Install the example package
+```
 pip install -e .
 ```
 
-3. Run the example.
+# Sticky Gridworld
+This example modifies the probabilistic structure of a standard gridworld environment, specifically Example 4.1 in the 
+Sutton and Barto (2018) text. The modification causes one of the goal states to be surrounded by states that are 
+"sticky", in that they can be traversed in the usual way but incur a 10x larger negative reward for doing so. This can 
+be interpreted as taking 10x longer to traverse than the other states (hence the nickname "sticky").
+
+Run the [example code](src/examples/gridworld/sticky_gridworld.py):
+
 ```
 python src/example/sticky_gridworld.py
 ```
 
-4. Inspect the generated policy, which should be as follows.
+The generated policy should be as follows.
+
 ```
 State 0:
 	Pr(u):  0.25
@@ -69,7 +77,20 @@ State 15:
 	Pr(l):  0.25
 	Pr(r):  0.25
 ```
+
 In the above, note that states 0 (upper-left corner) and 15 (lower-right corner) are goal states in the 4x4 gridworld. 
 The optimal action in state 14 is to move right, incur the -10 reward, and reach the goal state 15. By contrast, the 
 optimal action in state 13 is to move left toward state 0 in the upper-left corner, ignoring the goal state 15 just two 
 steps to the right owing to the -10 reward that would be received after entering state 14.
+
+# OpenAI Gym Cartpole with Stochastic Gradient Descent
+This example recreates the case study described 
+[here](https://matthewgerber.github.io/rlai/case_studies/inverted_pendulum.html).
+
+Run the [example code](src/examples/openai_gym/cartpole.py):
+
+```
+python src/examples/openai_gym/cartpole.py
+```
+
+Training plots will be displayed, and a video will be rendered every 100 episodes.
