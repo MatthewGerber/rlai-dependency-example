@@ -1,15 +1,16 @@
 from numpy.random import RandomState
 from rlai.agents.mdp import StochasticMdpAgent
-from rlai.environments.mdp import Gridworld
+from rlai.environments.gridworld import Gridworld
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
 from rlai.rewards import Reward
+from rlai.value_estimation.tabular import TabularStateActionValueEstimator
 
 
 def main():
 
     random = RandomState(12345)
-    gridworld = Gridworld.example_4_1(random)
+    gridworld = Gridworld.example_4_1(random, None)
 
     # the bottom-right corner (3,3) is a goal state. get the states surrounding this goal. these will become the sticky
     # states.
@@ -28,14 +29,22 @@ def main():
                     for r in gridworld.p_S_prime_R_given_S_A[sticky_state][a][s_prime]
                 }
 
+    epsilon = 0.1
+
+    q_S_A = TabularStateActionValueEstimator(
+        environment=gridworld,
+        epsilon=epsilon,
+        continuous_state_discretization_resolution=None
+    )
+
+    pi = q_S_A.get_initial_policy()
+
     mdp_agent = StochasticMdpAgent(
         name='agent',
         random_state=random,
-        continuous_state_discretization_resolution=None,
+        pi=pi,
         gamma=1.0
     )
-
-    mdp_agent.initialize_equiprobable_policy(gridworld.SS)
 
     # iterate the agents policy using q-learning temporal differencing
     iterate_value_q_pi(
@@ -43,20 +52,22 @@ def main():
         environment=gridworld,
         num_improvements=20,
         num_episodes_per_improvement=100,
+        num_updates_per_improvement=None,
         alpha=None,
         mode=Mode.Q_LEARNING,
         n_steps=None,
-        epsilon=0.1,
+        epsilon=epsilon,
         planning_environment=None,
         make_final_policy_greedy=True,
+        q_S_A=q_S_A,
         num_improvements_per_plot=20
     )
 
-    for s in mdp_agent.pi:
+    for s in pi:
         print(f'State {s.i}:')
-        for a in mdp_agent.pi[s]:
-            if mdp_agent.pi[s][a] > 0.0:
-                print(f'\tPr({a.name}):  {mdp_agent.pi[s][a]}')
+        for a in pi[s]:
+            if pi[s][a] > 0.0:
+                print(f'\tPr({a.name}):  {pi[s][a]}')
 
 
 if __name__ == '__main__':

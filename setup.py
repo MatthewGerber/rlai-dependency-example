@@ -1,11 +1,9 @@
-from os import path
-
 from setuptools import (
     setup, find_namespace_packages
 )
 
 INSTALL_REQUIREMENTS = [
-    'rlai==0.13.0'
+    'rlai==0.16.0'
 ]
 
 setup(
