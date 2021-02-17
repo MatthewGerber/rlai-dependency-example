@@ -11,8 +11,6 @@ def main():
 
     random_state = RandomState(12345)
 
-    epsilon = 0.2
-
     environment = Gym(
         random_state=random_state,
         T=None,
@@ -35,7 +33,7 @@ def main():
 
     q_S_A = ApproximateStateActionValueEstimator(
         environment=environment,
-        epsilon=epsilon,
+        epsilon=0.02,
         model=model,
         feature_extractor=feature_extractor,
         formula=None,
@@ -60,7 +58,6 @@ def main():
         alpha=None,
         mode=Mode.SARSA,
         n_steps=None,
-        epsilon=epsilon,
         planning_environment=None,
         make_final_policy_greedy=True,
         q_S_A=q_S_A,

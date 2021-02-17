@@ -3,7 +3,7 @@ from setuptools import (
 )
 
 INSTALL_REQUIREMENTS = [
-    'rlai==0.16.0'
+    'rlai==0.17.0'
 ]
 
 setup(

@@ -3,7 +3,6 @@ This repository provides examples of using the [`rlai`](https://github.com/Matth
 reinforcement learning. 
 
 # Installation
-
 1. Clone the repository.
 ```
 git clone git@github.com:MatthewGerber/rlai-dependency-example.git

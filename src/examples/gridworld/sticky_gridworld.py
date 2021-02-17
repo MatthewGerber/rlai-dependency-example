@@ -56,7 +56,6 @@ def main():
         alpha=None,
         mode=Mode.Q_LEARNING,
         n_steps=None,
-        epsilon=epsilon,
         planning_environment=None,
         make_final_policy_greedy=True,
         q_S_A=q_S_A,
