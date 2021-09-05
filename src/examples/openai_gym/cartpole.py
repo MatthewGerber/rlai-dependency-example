@@ -3,8 +3,8 @@ from rlai.agents.mdp import StochasticMdpAgent
 from rlai.environments.openai_gym import Gym, CartpoleFeatureExtractor
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
-from rlai.value_estimation.function_approximation.estimators import ApproximateStateActionValueEstimator
-from rlai.value_estimation.function_approximation.models.sklearn import SKLearnSGD
+from rlai.q_S_A.function_approximation.estimators import ApproximateStateActionValueEstimator
+from rlai.q_S_A.function_approximation.models.sklearn import SKLearnSGD
 
 
 def main():

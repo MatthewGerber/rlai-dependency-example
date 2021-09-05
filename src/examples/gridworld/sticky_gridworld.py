@@ -3,8 +3,8 @@ from rlai.agents.mdp import StochasticMdpAgent
 from rlai.environments.gridworld import Gridworld
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
+from rlai.q_S_A.tabular import TabularStateActionValueEstimator
 from rlai.rewards import Reward
-from rlai.value_estimation.tabular import TabularStateActionValueEstimator
 
 
 def main():
