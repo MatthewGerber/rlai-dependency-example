@@ -1,5 +1,5 @@
 from numpy.random import RandomState
-from rlai.agents.mdp import StochasticMdpAgent
+from rlai.agents.mdp import ActionValueMdpAgent
 from rlai.environments.openai_gym import Gym, CartpoleFeatureExtractor
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
@@ -42,11 +42,11 @@ def main():
         plot_model_bins=None
     )
 
-    agent = StochasticMdpAgent(
+    agent = ActionValueMdpAgent(
         name='Cartpole Agent',
         random_state=random_state,
-        pi=q_S_A.get_initial_policy(),
-        gamma=0.95
+        gamma=0.95,
+        q_S_A=q_S_A
     )
 
     iterate_value_q_pi(
@@ -60,7 +60,6 @@ def main():
         n_steps=None,
         planning_environment=None,
         make_final_policy_greedy=True,
-        q_S_A=q_S_A,
         num_improvements_per_plot=100
     )
 

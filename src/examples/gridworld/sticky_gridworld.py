@@ -1,8 +1,9 @@
 from numpy.random import RandomState
-from rlai.agents.mdp import StochasticMdpAgent
+from rlai.agents.mdp import ActionValueMdpAgent
 from rlai.environments.gridworld import Gridworld
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
+from rlai.policies.tabular import TabularPolicy
 from rlai.q_S_A.tabular import TabularStateActionValueEstimator
 from rlai.rewards import Reward
 
@@ -37,13 +38,11 @@ def main():
         continuous_state_discretization_resolution=None
     )
 
-    pi = q_S_A.get_initial_policy()
-
-    mdp_agent = StochasticMdpAgent(
+    mdp_agent = ActionValueMdpAgent(
         name='agent',
         random_state=random,
-        pi=pi,
-        gamma=1.0
+        gamma=1.0,
+        q_S_A=q_S_A
     )
 
     # iterate the agents policy using q-learning temporal differencing
@@ -58,15 +57,15 @@ def main():
         n_steps=None,
         planning_environment=None,
         make_final_policy_greedy=True,
-        q_S_A=q_S_A,
         num_improvements_per_plot=20
     )
 
-    for s in pi:
+    assert isinstance(mdp_agent.pi, TabularPolicy)
+    for s in mdp_agent.pi:
         print(f'State {s.i}:')
-        for a in pi[s]:
-            if pi[s][a] > 0.0:
-                print(f'\tPr({a.name}):  {pi[s][a]}')
+        for a in mdp_agent.pi[s]:
+            if mdp_agent.pi[s][a] > 0.0:
+                print(f'\tPr({a.name}):  {mdp_agent.pi[s][a]}')
 
 
 if __name__ == '__main__':

@@ -2,13 +2,9 @@ from setuptools import (
     setup, find_namespace_packages
 )
 
-INSTALL_REQUIREMENTS = [
-    'rlai==0.23.0'
-]
-
 setup(
     name='rlai-dependency-example',
-    version='0.0.0',
+    version='0.1.0',
     description='An example of using the rlai package.',
     author='Matthew Gerber',
     author_email='gerber.matthew@gmail.com',
@@ -17,6 +13,6 @@ setup(
     package_dir={'': 'src'},
     python_requires='==3.8.5',
     install_requires=[
-        INSTALL_REQUIREMENTS
+        'rlai==1.0.0'
     ]
 )
