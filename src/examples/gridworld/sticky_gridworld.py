@@ -1,11 +1,10 @@
 from numpy.random import RandomState
-from rlai.agents.mdp import ActionValueMdpAgent
-from rlai.environments.gridworld import Gridworld
+from rlai.core import Reward
+from rlai.core.environments.gridworld import Gridworld
+from rlai.gpi.state_action_value import ActionValueMdpAgent
+from rlai.gpi.state_action_value.tabular import TabularStateActionValueEstimator, TabularPolicy
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
-from rlai.policies.tabular import TabularPolicy
-from rlai.q_S_A.tabular import TabularStateActionValueEstimator
-from rlai.rewards import Reward
 
 
 def main():

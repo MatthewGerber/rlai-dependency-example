@@ -1,10 +1,12 @@
 from numpy.random import RandomState
-from rlai.agents.mdp import ActionValueMdpAgent
-from rlai.environments.openai_gym import Gym, CartpoleFeatureExtractor
+from rlai.core.environments.gymnasium import Gym, CartpoleFeatureExtractor
+from rlai.gpi.state_action_value import ActionValueMdpAgent
+from rlai.gpi.state_action_value.function_approximation import ApproximateStateActionValueEstimator
 from rlai.gpi.temporal_difference.evaluation import Mode
 from rlai.gpi.temporal_difference.iteration import iterate_value_q_pi
-from rlai.q_S_A.function_approximation.estimators import ApproximateStateActionValueEstimator
-from rlai.q_S_A.function_approximation.models.sklearn import SKLearnSGD
+from rlai.models.sklearn import SKLearnSGD
+
+from rlai.gpi.state_action_value.function_approximation.models.sklearn import SKLearnSGD as SKLearnSGDApproximator
 
 
 def main():
@@ -20,12 +22,13 @@ def main():
     )
 
     model = SKLearnSGD(
-        loss='squared_loss',
+        loss='squared_error',
         alpha=0.0,
         learning_rate='constant',
-        eta0=0.0001,
-        scale_eta0_for_y=False
+        eta0=0.0001
     )
+
+    function_approximator = SKLearnSGDApproximator(model)
 
     feature_extractor = CartpoleFeatureExtractor(
         environment=environment
@@ -34,7 +37,7 @@ def main():
     q_S_A = ApproximateStateActionValueEstimator(
         environment=environment,
         epsilon=0.02,
-        model=model,
+        model=function_approximator,
         feature_extractor=feature_extractor,
         formula=None,
         plot_model=False,

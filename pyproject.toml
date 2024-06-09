@@ -1,0 +1,20 @@
+[build-system]
+requires = ['poetry-core']
+build-backend = 'poetry.core.masonry.api'
+
+[tool.poetry]
+name = 'rlai-dependency-example'
+version = "0.2.0a0"
+description = 'An example of using the rlai package.'
+readme = 'README.md'
+authors = [
+    'Matthew Gerber <gerber.matthew@gmail.com>'
+]
+packages = [
+    { include = 'examples', from = 'src'}
+]
+repository = 'https://github.com/MatthewGerber/rlai-dependency-example'
+
+[tool.poetry.dependencies]
+python = '>=3.10,<3.13'
+rlai = '~1.3'
